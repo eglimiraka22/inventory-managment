@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CategoryList = ({id,name,handleCategory}) => {
+const CategoryList = ({id,name,handleCategory,items}) => {
 
   const selectCategoryHandler=() =>{
 
@@ -8,7 +8,8 @@ const CategoryList = ({id,name,handleCategory}) => {
     console.log(id)
   }  
   return (
-    <li onClick={selectCategoryHandler}>{name}</li>
+    <li onClick={selectCategoryHandler}>{name}     <p></p>
+    </li>
   )
 }
 
