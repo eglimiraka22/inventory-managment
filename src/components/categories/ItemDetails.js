@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateCategoryItem } from '../../store/slices/jobsSlice';
+import ChangesButton from '../UI/ChangesButton';
 
 const ItemDetails = ({ item, onClose }) => {
 	const dispatch = useDispatch();
 	const [modifiedItem, setModifiedItem] = useState({
 		nr: item.nr,
-		item: '', // Set initial value based on the item's properties
-		quantity: '',
-		description: '',
-		notes: '',
+		item: item.item, // Set initial value based on the item's properties
+		quantity: item.quantity,
+		description: item.description,
+		notes: item.notes,
 	});
 
 	const handleChange = (e) => {
@@ -69,7 +70,7 @@ const ItemDetails = ({ item, onClose }) => {
 							value={modifiedItem.item}
 							onChange={handleChange}
 							placeholder='Search & Select Item'
-							className='mt-1 p-1 border rounded w-full  bg-[#E0E0E1]'
+							className='mt-1 p-1 border rounded w-full  bg-[#F5F5F7]'
 						/>
 					</div>
 					<div className='mb-2 flex-1'>
@@ -77,12 +78,14 @@ const ItemDetails = ({ item, onClose }) => {
 							Quantity
 						</label>
 						<input
-							type='number'
-							name='quantity'
+							type="text"
+							name="quantity"
 							value={modifiedItem.quantity}
 							onChange={handleChange}
-							placeholder='Set Quantity'
-							className='mt-1 p-1 border rounded w-full  bg-[#E0E0E1]'
+							placeholder="Set Quantity"
+							inputMode="numeric"
+							className="mt-1 p-1 border rounded w-full bg-[#F5F5F7]"
+							pattern="[0-9]*" // Only allows numeric input
 						/>
 					</div>
 				</div>
@@ -91,11 +94,13 @@ const ItemDetails = ({ item, onClose }) => {
 						Description
 					</label>
 					<textarea
+					
 						name='description'
 						value={modifiedItem.description}
 						onChange={handleChange}
 						placeholder='Type the description...'
-						className='mt-1 px-1 h-fit  md:h-[9rem] border rounded-lg w-full bg-[#E0E0E1] '
+						className='mt-1 px-1 h-fit  md:h-[9rem] border rounded-lg w-full bg-[#F5F5F7] '
+						style={{ resize: 'none' }}
 					/>
 				</div>
 				<div className=' w-full px-4'>
@@ -107,16 +112,12 @@ const ItemDetails = ({ item, onClose }) => {
 						value={modifiedItem.notes}
 						onChange={handleChange}
 						placeholder='Type a note...'
-						className='mt-1  px-1 h-fit  md:h-[5rem] border rounded-lg w-full  bg-[#E0E0E1]'
+						className='mt-1  px-1 h-fit  md:h-[5rem] border rounded-lg w-full  bg-[#F5F5F7]'
+						style={{ resize: 'none' }}
 					/>
 				</div>
-				<div className='flex  justify-end px-4 py-2'>
-					<button
-						className='bg-green-500 w-[10rem] text-white px-4 py-2 rounded-lg'
-						onClick={handleSave}
-					>
-						Save
-					</button>
+				<div className='flex w-full items-center   justify-end px-4 py-2'>
+					<div><ChangesButton  text='Save Changes' className='bg-[#68C142]' onClick={handleSave}/></div>
 				</div>
 			</div>
 		</div>
