@@ -54,13 +54,30 @@ const JobsSlice = createSlice({
             console.log(action.payload)
             saveState(state)
 
-        }
+        },
+        updateCategoryItem: (state, action) => {
+            const { categoryId, updatedItem } = action.payload;
+            const categoryToUpdate = state.categories.find(cate=> cate.id === categoryId)
+
+            if (categoryToUpdate) {
+                console.log('Pass')
+				const existingItemIndex = categoryToUpdate.items.findIndex(items => items.nr === updatedItem.nr);
+
+				if (existingItemIndex !== -1) {
+					// Update existing item's content
+					categoryToUpdate.items[existingItemIndex] = updatedItem;
+				  } 
+      
+                }
+
+            console.log('Test', updatedItem)
+          },
     }
 })
 
 
 export const {
-    addJobForm
+    addJobForm,updateCategoryItem 
   } = JobsSlice.actions; 
 
 export default JobsSlice.reducer;

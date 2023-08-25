@@ -8,7 +8,7 @@ const CategoryList = ({id,name,handleCategory}) => {
     console.log(id)
   }  
   return (
-    <li onClick={selectCategoryHandler}>{name}</li>
+    <li className='w-full text-center p-1 border-2' onClick={selectCategoryHandler}>{name}</li>
   )
 }
 
