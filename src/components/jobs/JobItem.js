@@ -24,7 +24,7 @@ const JobItem = ({className,name,status,id,statusClassName=''}) => {
 	return (
 		<React.Fragment>
 			<li 
-				className={`flex w-full  justify-center py-1      gap-1  ${className}`}
+				className={`flex w-full  justify-center  py-1      gap-1  ${className}`}
 			>
 				<p className='w-full md:w-[60%] px-1 h-full flex flex-row justify-center items-center '>
 					<span
@@ -33,7 +33,7 @@ const JobItem = ({className,name,status,id,statusClassName=''}) => {
 					>
 						{name}
 					</span >
-					<span className='flex-1 flex text-center h-[100%] text-white    justify-center'><span className={` text-center w-[129px] py-1  rounded-md ${statusClassName}`}  style={{ backgroundColor: statusBackgroundColor }}>{status}</span></span>
+					<span className='flex-1 flex text-center h-full text-white  items-center   justify-center'><span className={` text-center w-[129px] py-1 h-full flex justify-center items-center   rounded-md ${statusClassName}`}  style={{ backgroundColor: statusBackgroundColor }}>{status}</span></span>
 				</p>
 			</li>
 		</React.Fragment>

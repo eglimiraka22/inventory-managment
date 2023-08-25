@@ -13,7 +13,7 @@ const Inventory = () => {
 			{!categoryForm && (
 				<div className='h-[100vh] w-full flex flex-col'>
 					<Header />
-
+                
 					<JobList />
 					{jobForm && <JobForm />}
 				</div>

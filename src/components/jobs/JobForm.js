@@ -1,9 +1,10 @@
 // src/components/JobForm.js
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addJobForm } from '../../store/slices/jobsSlice';
 import { uiActions } from '../../store/slices/uiSlice';
 import ChangesButton from '../UI/ChangesButton';
+import { Select, Option } from '@material-tailwind/react';
 
 const JobForm = (props) => {
 	const [jobName, setJobName] = useState('');
@@ -11,9 +12,9 @@ const JobForm = (props) => {
 	const [selectedCategories, setSelectedCategories] = useState([]);
 	const [selectedCategory, setSelectedCategory] = useState('');
 	const [status, setStatus] = useState('completed');
-    
-  const [nameError, setNameError] = useState('');
-  const [categoryError, setCategoryError] = useState('');
+
+	const [nameError, setNameError] = useState('');
+	const [categoryError, setCategoryError] = useState('');
 
 	const dispatch = useDispatch();
 
@@ -24,19 +25,23 @@ const JobForm = (props) => {
 		// Add more categories as needed
 	];
 
+	useEffect(() => {
+		if (nameError || categoryError) {
+			const timer = setTimeout(() => {
+				setNameError('');
+				setCategoryError('');
+			}, 1000);
 
-    useEffect(() => {
-        if (nameError || categoryError) {
-          const timer = setTimeout(() => {
-            setNameError('');
-            setCategoryError('');
-          }, 1000);
-    
-          return () => clearTimeout(timer);
-        }
-      }, [nameError, categoryError]);
-	const handleStatusChange = (e) => {
+			return () => clearTimeout(timer);
+		}
+
+	}, [nameError, categoryError]);
+
+
+    const handleStatusChange = (e) => {
+        e.preventDefault();
 		setStatus(e.target.value);
+        console.log(e.target.value);
 	};
 
 	const handleCategoryChange = (e) => {
@@ -65,22 +70,22 @@ const JobForm = (props) => {
 	};
 
 	const handleSubmit = (e) => {
-        e.preventDefault();
-    let isValid = true;
+		e.preventDefault();
+		let isValid = true;
 
-    if (jobName.trim() === '') {
-      setNameError('Category Title cannot be empty');
-      isValid = false;
-    }
+		if (jobName.trim() === '') {
+			setNameError('Category Title cannot be empty');
+			isValid = false;
+		}
 
-    if (selectedCategories.length === 0) {
-      setCategoryError('Select at least one category');
-      isValid = false;
-    }
+		if (selectedCategories.length === 0) {
+			setCategoryError('Select at least one category');
+			isValid = false;
+		}
 
-    if (!isValid) {
-      return;
-    }
+		if (!isValid) {
+			return;
+		}
 
 		if (jobName.trim() === '') {
 			alert('Category Title empty'); //TODO error message
@@ -173,10 +178,13 @@ const JobForm = (props) => {
 								value={jobName}
 								onChange={(e) => setJobName(e.target.value)}
 								placeholder='Type the JobeSite Name'
-								className={` ${nameError? 'border-2 border-red-500' : 'border-2'} px-3 rounded-[0.3125rem] h-[2rem] w-full bg-[#F8F8FA] focus-visible:outline-none text-sm placeholder-gray-300 `}
+								className={` ${
+									nameError ? 'border-2 border-red-500' : 'border-2'
+								} px-3 rounded-[0.3125rem] h-[2rem] w-full bg-[#F8F8FA] focus-visible:outline-none text-sm placeholder-gray-300 `}
 							/>
-                                    {nameError && <p className='text-red-500 font-serif text-sm'>{nameError}</p>}
-
+							{nameError && (
+								<p className='text-red-500 font-serif text-sm'>{nameError}</p>
+							)}
 						</div>
 
 						<div className='flex flex-row bg-white w-full justify-between py-4 gap-3'>
@@ -185,10 +193,11 @@ const JobForm = (props) => {
 									Category Included
 								</label>
 								<div className='p-1 w-full   '>
-                                    
 									<div className='flex flex-col  w-full '>
 										<select
-											className={`px-4 py-2 border  rounded-md w-full bg-[#F8F8FA]  text-gray-300 ${categoryError? 'border-red-500 border-2' : ''}`}
+											className={`px-4 py-2 border  rounded-md w-full bg-[#F8F8FA]  text-gray-300 ${
+												categoryError ? 'border-red-500 border-2' : ''
+											}`}
 											value={selectedCategory}
 											onChange={handleCategoryChange}
 										>
@@ -197,27 +206,41 @@ const JobForm = (props) => {
 											</option>
 											{categories.map((category, index) => (
 												<option key={index} value={category}>
-												<span></span>	{category}
+													<span></span> {category}
 												</option>
 											))}
 										</select>
-                                        {categoryError && <p className='text-red-500 font-serif text-sm'>{categoryError}</p>}
-
+										{categoryError && (
+											<p className='text-red-500 font-serif text-sm'>
+												{categoryError}
+											</p>
+										)}
 									</div>
 									<div className='mt-2'>
 										<ul className='flex flex-row gap-2'>
 											{selectedCategories.map((category, index) => (
 												<li
 													key={index}
-													className='mb-1  flex justify-start items-center'
+													className='mb-1  flex gap-1 justify-start items-center'
 												>
-													{category}
+													<span
+														className={`w-2 h-2 rounded-full border-0   ${
+															category === 'Category 1'
+																? 'bg-[#67AA3C]'
+																: category === 'Category 2'
+																? 'bg-[#EFD652]'
+																: category === 'Category 3'
+																? 'bg-[#9640BE]'
+																: ''
+														}`}
+													></span>
+													<p>{category}</p>
 													<svg
 														className='cursor-pointer'
 														onClick={() => handleRemoveCategory(category)}
 														xmlns='http://www.w3.org/2000/svg'
-														width='18'
-														height='18'
+														width='13'
+														height='13'
 														viewBox='0 0 18 18'
 														fill='none'
 													>
@@ -238,6 +261,7 @@ const JobForm = (props) => {
 									</div>
 								</div>
 							</div>
+							<p></p>
 							<div className='flex w-[30%] flex-col gap-1'>
 								<label htmlFor='Status' className='px-2'>
 									{' '}
@@ -245,36 +269,52 @@ const JobForm = (props) => {
 								</label>
 
 								<div className='flex'>
-                                <select 
-  className={`px-4 py-2 border rounded-md w-full focus:outline-none bg-[#F8F8FA] focus:bg-[#F8F8FA] active:bg-[#F8F8FA] 
-    ${status === 'completed' ? 'bg-green-400' : status === 'inProgress' ? 'bg-yellow-200' : status === 'onHold' ? 'bg-red-300' : ''}`}
-  value={status}
-  onChange={handleStatusChange}
->
-  <option value='completed' className='hover:bg-green-200'>
-    Completed
-  </option>
-  <option value='inProgress' className='hover:bg-yellow-200'>
-    In Progress
-  </option>
-  <option value='onHold' className='hover:bg-red-200'>
-    On Hold
-  </option>
-</select>
-
-
-                                    
+									<select
+										className={`px-4 appearance-none	 py-2 border rounded-md w-full focus:outline-none bg-[#F8F8FA] focus:bg-[#F8F8FA] active:bg-[#F8F8FA] 
+    ${
+			status === 'completed'
+				? 'bg-green-400'
+				: status === 'inProgress'
+				? 'bg-yellow-200'
+				: status === 'onHold'
+				? 'bg-red-300'
+				: ''
+		}`}
+										value={status}
+										onChange={handleStatusChange}
+									>
+										<option
+											value='completed'
+											className='hover:bg-green-200  appearance-none'
+										>
+											Completed
+										</option>
+										<option value='inProgress' className='hover:bg-yellow-200'>
+											In Progress
+										</option>
+										<option value='onHold' className='hover:bg-red-200'>
+											On Hold
+										</option>
+									</select>
 								</div>
 							</div>
 						</div>
 						<div className='w-full flex justify-end items-end gap-4 h-[32px]  mt-[10%]'>
 							<div className='px-1 w-fit md:w-[170px] flex flex-row h-[32px]'>
-								<ChangesButton text='Cancel Changes' onClick={handleCancelFormSubmit} cancelIcon={true}  className='bg-[#EB4345]' />
-                                
+								<ChangesButton
+									text='Cancel Changes'
+									onClick={handleCancelFormSubmit}
+									cancelIcon={true}
+									className='bg-[#EB4345]'
+								/>
 							</div>
-                            <div className='px-1 w-fit md:w-[150px] flex flex-row  h-[32px]'>
-								<ChangesButton text='Save Changes' onClick={handleSubmit} cancelIcon={false} className='bg-[#68C142]' />
-                                
+							<div className='px-1 w-fit md:w-[150px] flex flex-row  h-[32px]'>
+								<ChangesButton
+									text='Save Changes'
+									onClick={handleSubmit}
+									cancelIcon={false}
+									className='bg-[#68C142]'
+								/>
 							</div>
 						</div>
 					</div>

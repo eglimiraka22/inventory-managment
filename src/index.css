@@ -39,14 +39,8 @@ code {
   background: #555;
 }
 
-.select {
-  outline: none;
-  box-shadow: none;  
-  background-color:transparent;
-
-}
-
 
 .transition-opacity{
   transition-duration: 400ms;
 }
+
