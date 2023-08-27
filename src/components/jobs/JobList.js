@@ -25,17 +25,36 @@ const JobList = (props) => {
 		dispatch(reorderJobs({ sourceIndex, destinationIndex }));
 	};
 	useEffect(() => {
+		let timer;
+
 		if (jobsData) {
-			//Filtering jobs based on selected category
+		  // Clear any previous timer
+		  if (timer) {
+			clearTimeout(timer);
+		  }
+	
+		  // Set a new timer to update filtered jobs after 2 seconds
+		  timer = setTimeout(() => {
 			const jobs = jobsData.filter((job) =>
-				job.jobName.toLowerCase().includes(filterValue.toLowerCase())
+			  job.jobName.toLowerCase().includes(filterValue.toLowerCase())
 			);
 			setFilteredJobs(jobs);
+
+		  }, 500); // 2-second delay
 		}
-		console.log(jobsData);
 
-	}, [jobsData, filterValue]);
+		// Cleanup: Clear the timer if the component unmounts or dependencies change
+		return () => {
+		  if (timer) {
+			clearTimeout(timer);
 
+		  }
+		};
+	  }, [jobsData, filterValue]);
+
+	  useEffect(() => {
+		console.log(filteredJobs); // Logs the most up-to-date state
+	  }, [filteredJobs]);
 	// const jobsFilteredList = filteredJobs.map((jobs, index) => {       OLD SOLUTION WITHOUT REACT DND
 	// 	return (
 	// 		<JobItem
