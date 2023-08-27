@@ -5,7 +5,6 @@ import { uiActions } from '../../store/slices/uiSlice';
 import CategoryDetails from './CategoryDetails';
 import CategoryList from './CategoryList';
 import { AiOutlineSearch,AiOutlineArrowLeft } from 'react-icons/ai'; // Import the search icon
-import { Select, Option } from "@material-tailwind/react";
 
 const CategoryLayoutForm = (props) => {
 	const [selectedCategoryId, setSelectedCategoryId] = useState(null);

@@ -72,12 +72,23 @@ const JobsSlice = createSlice({
 
             console.log('Test', updatedItem)
           },
+          reorderJobs: (state, action) => {
+            const { sourceIndex, destinationIndex } = action.payload;
+            console.log(action.payload)
+            const updatedJobs = [...state.jobs];
+      
+            const [movedJob] = updatedJobs.splice(sourceIndex, 1);
+            updatedJobs.splice(destinationIndex, 0, movedJob);
+      
+            state.jobs = updatedJobs;
+            saveState(state);
+          },
     }
 })
 
 
 export const {
-    addJobForm,updateCategoryItem 
+    addJobForm,updateCategoryItem ,reorderJobs
   } = JobsSlice.actions; 
 
 export default JobsSlice.reducer;
