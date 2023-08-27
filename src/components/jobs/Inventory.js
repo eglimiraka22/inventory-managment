@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Layout/Header';
 import JobList from './JobList';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import JobForm from './JobForm';
 import CategoryLayoutForm from '../categories/CategoryLayoutForm';
 

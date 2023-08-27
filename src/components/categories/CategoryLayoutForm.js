@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ItemDetails from './ItemDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiActions } from '../../store/slices/uiSlice';
 import CategoryDetails from './CategoryDetails';

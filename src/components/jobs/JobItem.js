@@ -1,11 +1,11 @@
-import React ,{useState,useEffect}from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { uiActions } from '../../store/slices/uiSlice';
 
 const JobItem = ({className,name,status,id,statusClassName=''}) => {
 	const dispatch = useDispatch();
 
-    
+  
 	const onClickJobHandler = () => {
 		dispatch(uiActions.toggleCategoryForm());
 		dispatch(uiActions.setSelectedJob(id));

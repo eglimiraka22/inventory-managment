@@ -44,3 +44,8 @@ code {
   transition-duration: 400ms;
 }
 
+/* Add this to your stylesheet */
+.gold-border {
+  border: 2px solid gold;
+  /* Add any other animation properties here */
+}
